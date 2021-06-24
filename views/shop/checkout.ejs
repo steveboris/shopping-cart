@@ -1,0 +1,71 @@
+<%- include ../partials/header %> <%- include ../partials/categories-navbar %>
+<div class="text-center hero-container">
+  <img class="d-block w-100 hero-image" src="/images/checkout.jpg" />
+  <div class="hero-text">
+    <h1>
+      <i class="fa fa-euro-sign"></i>
+    </h1>
+  </div>
+</div>
+<div class="container mt-4 mb-5">
+  <!-- Flash messages -->
+  <div class="row mt-3 mb-3">
+    <div class="col-md-8 m-auto">
+      <% if (errorMsg) { %>
+      <div id="error" class="alert alert-danger">
+        <%= errorMsg %>
+      </div>
+      <% } else { %>
+      <div id="error" class="alert alert-danger d-none"></div>
+      <% } %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 m-auto">
+      <!-- Checkout form -->
+      <form action="/checkout" method="POST" id="checkout-form">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="card-name"><%= __('card_holder_name')%></label>
+              <input type="text" id="card-name" class="form-control" name="holdername" required />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address"><%= __('address')%></label>
+              <input
+                type="text"
+                id="address"
+                class="form-control"
+                required
+                name="address"
+              />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <label for="card-element"><%= __('card_information')%></label>
+            <!-- A Stripe Element will be inserted here. -->
+            <div id="card-element" class="StripeElement"></div>
+            <!-- Used to display form errors. -->
+            <div id="card-errors" role="alert" class="text-danger mb-3"></div>
+          </div>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        </div>
+        <button id="submit-btn" type="submit" class="btn btn-dark button-style">
+          <%= __('pay')%>
+        </button>
+      </form>
+    </div>
+    <div class="col-md-4 mt-3 payment">
+      <div class="col"><i class="fa fa-cc-mastercard"></i></div>
+      <div class="col"><i class="fa fa-cc-paypal"></i></div>
+      <div class="col"><i class="fa fa-cc-visa"></i></div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript" src="javascripts/checkout.js"></script>
+
+<%- include ../partials/footer %>

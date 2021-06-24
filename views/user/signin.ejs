@@ -1,0 +1,39 @@
+<%- include ../partials/header %> <%- include ../partials/categories-navbar %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 m-auto">
+      <h1 class="mt-4 mb-4"><%= __('sign_in_page')%></h1>
+      <!-- Flash message -->
+      <% if(errorMsg !=null && errorMsg.length>0) {%>
+      <div id="flash-msg" class="alert alert-danger">
+        <%=errorMsg %>
+      </div>
+      <%}%>
+      <form action="/user/signin" method="POST">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" name="email" id="email" />
+        </div>
+        <div class="form-group">
+          <label for="password"><%= __('password')%></label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+          />
+        </div>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button type="submit" class="btn btn-primary button-style">
+          <%= __('signin')%>
+        </button>
+      </form>
+      <p class="mt-3">
+        <%= __('no_account_msg')%> <a href="/user/signup"> <%= __('signup')%>!</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<%- include ../partials/footer %>

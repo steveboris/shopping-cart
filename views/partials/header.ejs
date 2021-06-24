@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% if (pageName) { %>
+    <title>Beauty | <%= pageName %>
+    </title>
+    <%} else {%>
+      <title>Beauty</title>
+      <% } %>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous">
+          </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+          integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+          </script>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+          </script>
+
+        <script src="https://kit.fontawesome.com/91abd10b8f.js" crossorigin="anonymous">
+        </script>
+
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Mapbox -->
+        <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
+        <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="page-container">
+    <div id="content-wrap">
+      <div class="row nav-container mx-auto">
+        <div class="col-md-4 col-sm-12 col-xs-12 logo-container">
+          <a href="/">
+            <h4 class="logo-title"><i class="fa fa-shopping-bag"></i>Beauty</h4>
+          </a>
+        </div>
+        <div class="col-md-4 col-sm-12 col-xs-12">
+          <div class="search-container">
+            <form class="form-inline" action="/products/search" method="GET">
+              <input class="search-input" type="search" placeholder="<%= __('search')%>" name="search" />
+            </form>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12 col-xs-12 right-nav pt-2">
+          <ul>
+            <li>
+              <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <i class="fas fa-globe" style="font-size: 20px"></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="text-align: center; font-weight: 600;">
+                <a href="#">En</a>
+                <div class="dropdown-divider"></div>
+                <a href="#">De</a>
+              </div>
+            </li>
+            <li><i class="fa fa-heart" style="font-size: 20px"></i></li>
+            <li style="margin-right: 10px;">
+              <a href="/shopping-cart">
+                <i class="fab fa-shopify" style="font-size: 23px !important;"></i>
+                <% if(session.cart) { %>
+                  <span class="badge badge-pill badge-info" style="position: absolute; margin-left: -8px; font-weight: 800;">
+                    <%= session.cart.totalQty %>
+                  </span>
+                  <% } else { %>
+                    <span class="badge badge-pill badge-info"
+                          style="position: absolute; margin-left: -8px; font-weight: 800;">0</span>
+                  <% } %>
+              </a>
+            </li>
+            <% if (login) { %>
+            <li>
+              <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <i class="fas fa-user"></i> <%= __('welcome') %> <%=currentUser.username%>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="text-align: center; font-weight: 600;">
+                <a class="dropdown-item" href="/user/profile"><%= __('user_account') %></a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/user/logout"><%= __('logout') %></a>
+              </div>
+            </li>
+            <% } else {%>
+            <li>
+              <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <i class="fas fa-sign-in-alt" style="font-size: 20px"></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="text-align: center; font-weight: 600;">
+                <a href="/user/signup"><%= __('signup')%></a>
+                <div class="dropdown-divider"></div>
+                <a href="/user/signin"><%= __('signin')%></a>
+              </div>
+            </li>
+            <% }%>
+          </ul>
+        </div>
+      </div>
